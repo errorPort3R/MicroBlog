@@ -1,16 +1,17 @@
 package com.theironyard.javawithclojure.jhporter;
 
 import spark.ModelAndView;
+import spark.Session;
 import spark.Spark;
 import spark.template.mustache.MustacheTemplateEngine;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 
 public class Main {
 
-    static User user;
-    static ArrayList<User> userList = new ArrayList<>();
+
+    static HashMap<String, User> userMap = new HashMap<>();
 
     public static void main(String[] args)
     {
@@ -18,38 +19,64 @@ public class Main {
         Spark.get(
                 "/",
                 (request, response) -> {
-                    HashMap m = new HashMap();
+                    Session session = request.session();
+                    String name = session.attribute("currentUserName");
+                    User user = userMap.get(name);
+
                     if (user == null)
                     {
-                        return new ModelAndView(m, "login.html");
+                        return new ModelAndView(null, "index.html");
                     }
                     else
                     {
-                        m.put("name", user.name);
-                        m.put("users", userList);
-                        return new ModelAndView(m, "home.html");
+                        return new ModelAndView(user, "messages.html");
                     }
                 },
                 new MustacheTemplateEngine()
         );
         Spark.post(
-                "/login",
+                "/create-user",
                 (request,response) -> {
                     String username = request.queryParams("username");
                     String password = request.queryParams("password");
-                    user = new User(username, password);
-                    userList.add(user);
+                    Session session = request.session();
+                    User user;
+                    if (!userMap.containsKey(username))
+                    {
+                        user = new User(username, password);
+                        userMap.put(username, user);
+                    }
+                    if (password.equals(userMap.get(username).password))
+                    {
+                        session.attribute("currentUserName", username);
+                    }
+
                     response.redirect("/");
                     return "";
                 }
         );
         Spark.post(
-                "/logout",
-                (request, response) -> {
-                    user = null;
+                "/create-message",
+                (request,response) -> {
+                    String blogpost = request.queryParams("blog");
+                    Session session = request.session();
+                    String username = session.attribute("currentUserName");
+
+                    if (!blogpost.isEmpty())
+                    {
+                        userMap.get(username).addPost(blogpost);
+                    }
+                    blogpost = null;
                     response.redirect("/");
-                    return"";
+                    return "";
                 }
         );
+//        Spark.post(
+//                "/logout",
+//                (request, response) -> {
+//                    response.redirect("/");
+//                    return"";
+//                }
+//        );
     }
 }

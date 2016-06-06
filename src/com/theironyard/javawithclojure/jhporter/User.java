@@ -8,10 +8,40 @@ import java.util.ArrayList;
 public class User
 {
     String name;
-    ArrayList<String> password;
+    String password;
+    ArrayList<Messages> messages;
 
-    public User(String name)
+    public User(String name, String password)
     {
         this.name = name;
+        this.password= password;
+        messages = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void addPost(String blogpost)
+    {
+        Messages message = new Messages(blogpost);
+        messages.add(message);
+    }
+
+    public void removePost(Messages post)
+    {
+        messages.remove(post);
     }
 }

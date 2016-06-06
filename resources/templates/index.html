@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Login Page</title>
 </head>
 <body>
-Messages by {{name}}!
-<br><br>
-<form action="logout" method="post">
-    <button button type="submit">Create User</button>
-</form>
 
-<ol>
-    {{#users}}
-    <li>{{name}}</li>
-    {{/users}}
-</ol>
+<form action="/create-user" method="post">
+    <input type="text" name ="username" placeholder="Enter your name"/>
+    <input type="text" name="password" placeholder="Enter your password"/>
+    <button type="submit">Login</button>
+</form>
 </body>
 </html>
