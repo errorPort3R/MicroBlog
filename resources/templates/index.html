@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+Messages by {{name}}!
+<br><br>
+<form action="logout" method="post">
+    <button button type="submit">Create User</button>
+</form>
+
+<ol>
+    {{#users}}
+    <li>{{name}}</li>
+    {{/users}}
+</ol>
+</body>
+</html>
