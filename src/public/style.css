@@ -1,0 +1,35 @@
+body {
+    background-color: #4C1FBF;
+
+}
+
+h3 {
+    color: white;
+    text-align: Left;
+    font-size: 30px;
+    font-family:
+}
+
+li {
+    color: white;
+    text-align:left;
+    font-family: "Comic";
+    font-size: 20px;
+}
+
+input[type=text] {
+    width: 45%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    font-size: 30px;
+}
+button{
+    width: 75px;
+    height: 30px;
+    font-size: 20px;
+}
+
+
+
+

@@ -8,6 +8,8 @@ import spark.template.mustache.MustacheTemplateEngine;
 
 import java.util.HashMap;
 
+import static spark.Spark.staticFileLocation;
+
 public class Main {
 
 
@@ -15,6 +17,7 @@ public class Main {
 
     public static void main(String[] args)
     {
+        staticFileLocation("/public");
         Spark.init();
         Spark.get(
                 "/",
@@ -22,7 +25,7 @@ public class Main {
                     Session session = request.session();
                     String name = session.attribute("currentUserName");
                     User user = userMap.get(name);
-
+                    //http://localhost:4567/style.css
                     if (user == null)
                     {
                         return new ModelAndView(null, "index.html");
@@ -71,12 +74,14 @@ public class Main {
                     return "";
                 }
         );
-//        Spark.post(
-//                "/logout",
-//                (request, response) -> {
-//                    response.redirect("/");
-//                    return"";
-//                }
-//        );
+        Spark.post(
+                "/logout",
+                (request, response) -> {
+                    response.redirect("/");
+                    Session session = request.session();
+                    session.attribute("currentUserName", null);
+                    return"";
+                }
+        );
     }
 }
