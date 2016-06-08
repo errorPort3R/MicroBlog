@@ -7,17 +7,24 @@
 </head>
 <body>
 <form action="/create-message" method="post">
-    <input type="text" name ="blog" placeholder="Type your message here"/><br>
+    <input autofocus type="text" name ="blog" placeholder="Type your message here"/><br>
     <button type="submit">Submit</button>
 </form><br>
-<form action="logout" method="post">
-    <button button type="submit">Logout</button>
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
 </form>
 
 <h3>Messages by {{name}}:</h3><br><br>
 <ol>
     {{#messages}}
-    <li>{{message}}</li>
+    <li >
+        <form action="/update-message" method="post">
+            {{message}} &nbsp;
+            <input type="hidden" value="{{id}}"  name="messageId">
+            <input type="text" name="newMessage"/>
+            <button type="submit">Delete\Update</button>
+        </form>
+    </li>
     {{/messages}}
 </ol>
 </body>

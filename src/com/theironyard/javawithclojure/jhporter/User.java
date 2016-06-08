@@ -9,7 +9,13 @@ public class User
 {
     String name;
     String password;
-    ArrayList<Messages> messages;
+    ArrayList<Message> messages;
+
+    public User(String name, String password, ArrayList<Message> messages) {
+        this.name = name;
+        this.password = password;
+        this.messages = messages;
+    }
 
     public User(String name, String password)
     {
@@ -36,12 +42,15 @@ public class User
 
     public void addPost(String blogpost)
     {
-        Messages message = new Messages(blogpost);
+        Message message = new Message(blogpost);
         messages.add(message);
     }
 
-    public void removePost(Messages post)
-    {
-        messages.remove(post);
+    public ArrayList<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(ArrayList<Message> messages) {
+        this.messages = messages;
     }
 }
